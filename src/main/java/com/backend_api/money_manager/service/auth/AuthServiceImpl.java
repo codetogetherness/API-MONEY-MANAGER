@@ -1,5 +1,6 @@
 package com.backend_api.money_manager.service.auth;
 
+import com.backend_api.money_manager.dto.request.users.AccountVerification;
 import com.backend_api.money_manager.dto.request.users.LoginRequest;
 import com.backend_api.money_manager.dto.request.users.RegisterRequest;
 import com.backend_api.money_manager.dto.response.users.SignResponse;
@@ -7,6 +8,7 @@ import com.backend_api.money_manager.entity.AccountStatus;
 import com.backend_api.money_manager.entity.Role;
 import com.backend_api.money_manager.entity.Users;
 import com.backend_api.money_manager.exception.ResponseHandler;
+import com.backend_api.money_manager.helper.InfoAccount;
 import com.backend_api.money_manager.repository.UsersRepository;
 import com.backend_api.money_manager.security.jwt.JwtService;
 import org.modelmapper.ModelMapper;
@@ -19,7 +21,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -34,6 +35,9 @@ public class AuthServiceImpl implements AuthService{
     PasswordEncoder passwordEncoder;
     @Autowired
     JwtService jwtService;
+
+    @Autowired
+    InfoAccount infoAccount;
 
     @Override
     public ResponseEntity<Object> login(LoginRequest request) {
@@ -63,5 +67,6 @@ public class AuthServiceImpl implements AuthService{
         var data = usersRepository.save(userMapper);
         return ResponseHandler.generateResponseSuccess(data);
     }
+
 
 }

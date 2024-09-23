@@ -1,5 +1,6 @@
 package com.backend_api.money_manager.service.auth;
 
+import com.backend_api.money_manager.dto.request.users.AccountVerification;
 import com.backend_api.money_manager.dto.request.users.LoginRequest;
 import com.backend_api.money_manager.dto.request.users.RegisterRequest;
 import org.springframework.http.ResponseEntity;
