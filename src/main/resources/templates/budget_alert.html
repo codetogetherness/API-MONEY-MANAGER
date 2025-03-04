@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifikasi Berhasil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            background-color: white;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .email-header {
+            background-color: red;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        .email-body {
+            padding: 20px;
+        }
+        .confirmation-message {
+            background-color: rgba(211, 47, 47, 0.5);
+            color: red;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .email-footer {
+            font-size: 12px;
+            color: #6c757d;
+            text-align: center;
+            padding-top: 20px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="email-header">
+        <h2 th:text="'Peringatan, ' + ${name} + '!'"></h2>
+    </div>
+    <div class="email-body">
+        <p>Hai <strong th:text="${name}">[Nama Pengguna]</strong>,</p>
+        <p>Kami ingin memberitahukan bahwa pengeluaran terbaru Anda, <strong th:text="${orderNumber}">[Nomor Pesanan],</strong> telah melebihi batas anggaran yang Anda tentukan, yaitu <strong th:text="${budgetAmount}">[Jumlah Anggaran].</strong></p>
+        <div class="confirmation-message">Periksa batas anggaran Anda!</div>
+        <p>Silakan cek kembali pengeluaran Anda dan sesuaikan anggaran Anda jika diperlukan.</p>
+        <p>Terima kasih,</p>
+        <p><strong>[PT TEAM TECH]</strong></p>
+    </div>
+    <div class="email-footer">
+        <p>Jika Anda membutuhkan bantuan lebih lanjut, jangan ragu untuk menghubungi kami di <a href="mailto:support@yourcompany.com">support@yourcompany.com</a>.</p>
+    </div>
+</div>
+</body>
+</html>

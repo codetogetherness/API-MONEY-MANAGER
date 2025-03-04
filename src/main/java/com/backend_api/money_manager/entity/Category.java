@@ -1,0 +1,36 @@
+package com.backend_api.money_manager.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+@Entity
+@Setter
+@Getter
+public class Category implements Serializable {
+    @Id
+    private String id;
+
+    private String name;
+
+    private String icon;
+    @ManyToOne
+    @JoinColumn(name = "category_action_id")
+    private CategoryAction categoryAction;
+
+    @Column(name = "created_at", columnDefinition = "datetime", updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", columnDefinition = "datetime")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
+    @Column(name = "is_delete")
+    private Boolean isDelete=false;
+}
