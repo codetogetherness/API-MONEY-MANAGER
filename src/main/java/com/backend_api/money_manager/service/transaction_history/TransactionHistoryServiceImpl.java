@@ -60,8 +60,7 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService{
 
         try{
             var categoryAction = categoryActionRepository.findById(request.getCategoryAction()).orElseThrow(); //menemukan data dari tabel category action
-            System.out.println("=== category action bro ===");
-            System.out.println(categoryAction.getId());
+
             BalanceUser balance = balanceUserRepository.findByUserId(infoAccount.get().getId()); //didapat saat melakukan verification, cuman akun yg terverifikasi yg bisa melakukan transaksi
 
             if(balance == null){
@@ -76,8 +75,7 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService{
             } else if(categoryAction.getName().equals("Income")){
 
                 HistoryTransaction transaction = transactionUtil.createIncome(request);
-                System.out.println("=== transaction ===");
-                System.out.println(transaction);
+
                 return ResponseHandler.generateResponseSuccess(transaction);
 
             }
@@ -128,8 +126,6 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService{
                         BigDecimal totalAmount = (BigDecimal) row[1];
                         String total = totalAmount.setScale(0, RoundingMode.DOWN).toString();
 
-                        System.out.println((BigDecimal) row[1] + " TOTAL");
-
                         return new TransactionSummary(initialDate, total);
                     })
                     .toList();
@@ -160,7 +156,6 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService{
 
 
 
-            System.out.println(startDate + " " +  endDate);
             List<Object[]> query = historyTransactionRepository.chartStickDayBetween(startDate, endDate, request.getActionId(), infoAccount.get().getId());
             List<StickChart> response = query.stream()
                     .map(row -> {

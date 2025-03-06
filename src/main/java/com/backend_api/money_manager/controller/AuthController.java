@@ -9,6 +9,7 @@ import com.backend_api.money_manager.service.users.UsersService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,19 +29,19 @@ public class AuthController {
     @Operation(summary = "Login Service", description = "authentication service")
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody LoginRequest request){
-        System.out.println("=== login controller ===");
         return authService.login(request);
     }
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody RegisterRequest request){
-        System.out.println("=== register controller ===");
-        System.out.println(request);
         return authService.register(request);
     }
 
+    @Operation(
+            summary = "Secure data",
+            security = @SecurityRequirement(name = "Bearer Authentication")
+    )
     @PostMapping("/verification-account")
-    @Parameter(name = "Authorization", description = "Bearer token", required = true, in = ParameterIn.HEADER)
     public ResponseEntity<Object> verificationAccount(@RequestBody AccountVerification request){
         return usersService.verificationAccount(request);
     }

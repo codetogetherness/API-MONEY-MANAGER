@@ -56,9 +56,6 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public ResponseEntity<Object> login(LoginRequest request) {
-        System.out.println("=== login service ===");
-        System.out.println(request.getEmail());
-        System.out.println(request.getPassword());
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
@@ -68,15 +65,12 @@ public class AuthServiceImpl implements AuthService{
         String token = jwtService.generateToken(data);
         String refreshToken = jwtService.generateRefreshToken(data.getId());
 
-        System.out.println(token + "THIS TOKEN");
         SignResponse response = new SignResponse(data.getEmail(),data.getRole().name(),token,refreshToken);
         return ResponseHandler.generateResponseSuccess(response);
     }
 
     @Override
     public ResponseEntity<Object> register(RegisterRequest request) {
-        System.out.println("=== register service ===");
-        System.out.println(request);
         ModelMapper modelMapper = new ModelMapper();
         Users userMapper = modelMapper.map(request, Users.class);
         userMapper.setId(UUID.randomUUID().toString());

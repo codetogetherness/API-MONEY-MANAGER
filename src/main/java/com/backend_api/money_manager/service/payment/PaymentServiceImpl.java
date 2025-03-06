@@ -56,12 +56,10 @@ public class PaymentServiceImpl implements PaymentService{
 
     @Override
     public ResponseEntity<Object> createPayment(SubscriptionReq request) {
-        System.out.println("=== subs ===");
-        System.out.println(request.getPaymentCategory());
 
         var findCat = categoryTransactionRepository.findById(request.getSubscriptionId());
 //        if(request.getPaymentMethod() == "Shopeepay"){
-//            System.out.println(" === tes tes ===");
+
 //        }
         String code = GenerateCode.code();
         String apiUrl = midUrl;
@@ -74,7 +72,6 @@ public class PaymentServiceImpl implements PaymentService{
         headers.set("Authorization", "Basic " + encodedAuth);
 
         if("shopeepay".equalsIgnoreCase(request.getPaymentCategory())){
-            System.out.println("=== halo shopee ===");
 //            return  null;
             PaymentVaRequest pay = new PaymentVaRequest();
             int total = Integer.parseInt(findCat.get().getAmount()) + adminFee;
@@ -123,8 +120,6 @@ public class PaymentServiceImpl implements PaymentService{
             PaymentVaRequest.Shopper shopperurl = new PaymentVaRequest.Shopper();
             shopperurl.setCallback_shopee_url("https://shopee.co.id/buyer/login");
             pay.setShopper(shopperurl);
-            System.out.println("=== shopper ===");
-            System.out.println(pay.toString());
 
             HttpEntity<PaymentVaRequest> entity = new HttpEntity<>(pay, headers);
             TransactionUser body = new TransactionUser();

@@ -30,7 +30,6 @@ public class MailService {
                 emailSender.send(message);
                 sent = true;
 
-                System.out.println("successfully");
             } catch (Exception e) {
                 attempts++;
                 if (attempts == 3) {

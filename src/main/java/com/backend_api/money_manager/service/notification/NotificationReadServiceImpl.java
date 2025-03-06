@@ -42,8 +42,6 @@ public class NotificationReadServiceImpl implements NotificationReadService{
             String user = infoAccount.get().getEmail();
             var notification = notificationRepository.findById(request.getNotificationId()).orElseThrow();
             var findNotificationRead = notificationReadRepository.findByNotificationId(request.getNotificationId());
-            System.out.println("=== notif ===");
-            System.out.println(notification.getId());
 
 
             if (notification == null) {
@@ -51,8 +49,6 @@ public class NotificationReadServiceImpl implements NotificationReadService{
             }
 
             var find = usersRepository.findByEmail(user).orElseThrow();
-            System.out.println("=== find ===");
-            System.out.println(find);
 
             findNotificationRead.setIsRead(true);
 

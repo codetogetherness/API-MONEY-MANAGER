@@ -4,6 +4,8 @@ import com.backend_api.money_manager.dto.request.notification.NotificationReques
 import com.backend_api.money_manager.dto.request.notification.NotificationRequestUser;
 import com.backend_api.money_manager.dto.request.notification.PageNotificationRequest;
 import com.backend_api.money_manager.service.notification.NotificationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,13 +19,19 @@ public class NotificationController {
     @Autowired
     NotificationService notificationService;
 
+    @Operation(
+            summary = "Secure data",
+            security = @SecurityRequirement(name = "Bearer Authentication")
+    )
     @PostMapping("/notification")
     public ResponseEntity<Object> createNotification(@RequestBody NotificationRequest request) {
-        System.out.println("=== notification controller ===");
-        System.out.println(request);
         return notificationService.create(request);
     }
 
+    @Operation(
+            summary = "Secure data",
+            security = @SecurityRequirement(name = "Bearer Authentication")
+    )
     @PostMapping("/notification/find/user")
     public ResponseEntity<Object> findNotificationUser(@RequestBody PageNotificationRequest request) {
         return notificationService.findUser(request);

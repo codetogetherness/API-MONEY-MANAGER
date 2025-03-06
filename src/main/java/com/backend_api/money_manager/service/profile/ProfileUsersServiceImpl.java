@@ -37,8 +37,7 @@ public class ProfileUsersServiceImpl implements ProfileUserService{
         String user = infoAccount.get().getEmail();
 
         var find = usersRepository.findByEmail(user).orElseThrow();
-        System.out.println("=== find profile ===");
-        System.out.println(find);
+
         find.setFullName(s3ProfileUsersRequest.getFileName());
         find.setPhoneNumber(s3ProfileUsersRequest.getPhoneNumber());
 

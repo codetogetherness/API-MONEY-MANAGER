@@ -52,8 +52,7 @@ public class NotificationServiceImpl implements NotificationService{
             String user = infoAccount.get().getEmail();
 
             BalanceUser balance = balanceUserRepository.findByUserId(infoAccount.get().getId());
-            System.out.println("=== balance service ===");
-            System.out.println(balance);
+
             if(balance == null){
                 return ResponseHandler.generateResponseError(HttpStatus.BAD_REQUEST,"","Info Balance Not Found");
             }
@@ -62,8 +61,6 @@ public class NotificationServiceImpl implements NotificationService{
 //            data.setAccountStatus(AccountStatus.VERIFIED);
 //            var save = usersRepository.save(data);
             var find = usersRepository.findByEmail(user).orElseThrow();
-            System.out.println("=== find ===");
-            System.out.println(find);
 
             Notification notification = new Notification();
             notification.setId(UUID.randomUUID().toString());

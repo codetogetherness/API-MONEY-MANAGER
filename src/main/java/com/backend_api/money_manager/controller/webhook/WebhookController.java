@@ -5,6 +5,8 @@ import com.backend_api.money_manager.entity.StatusTransaction;
 import com.backend_api.money_manager.entity.TransactionUser;
 import com.backend_api.money_manager.exception.ResponseHandler;
 import com.backend_api.money_manager.repository.TransactionUserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,17 +26,18 @@ public class WebhookController {
     @Autowired
     TransactionUserRepository transactionUserRepository;
 
+    @Operation(
+            summary = "Secure data",
+            security = @SecurityRequirement(name = "Bearer Authentication")
+    )
     @PostMapping("/callback-transaction")
     public ResponseEntity<Object> handlePaymentWebhook(@RequestBody WebhookVaResponse webhookResponse) {
-        System.out.println("=== check response ===");
         TransactionUser find = transactionUserRepository.findByCode(webhookResponse.getOrderId());
 
         if(find != null) {
-            System.out.println("=== ada isinya ===");
             if(Objects.equals(webhookResponse.getPaymentType(), "qris")){
                 // code shopeepay
                 if (Objects.equals(webhookResponse.getAcquirer(),"airpay shopee")) {
-                    System.out.println("=== tes airpy shope ===");
                     if(Objects.equals(webhookResponse.getTransactionStatus(), "settlement")) {
                         find.setActive(true);
                         find.setStatusTransaction(StatusTransaction.SUCCESS);
@@ -62,7 +65,6 @@ public class WebhookController {
                     } else if(Objects.equals(webhookResponse.getTransactionStatus(), "cancel")) {
                         find.setStatusTransaction(StatusTransaction.CANCEL);
                     } else if(Objects.equals(webhookResponse.getTransactionStatus(), "expire")){
-                        System.out.println("=== tes expire ===");
                         find.setStatusTransaction(StatusTransaction.EXPIRED);
                     }else if(Objects.equals(webhookResponse.getTransactionStatus(), "deny")){
                         find.setStatusTransaction(StatusTransaction.DENY);
@@ -121,6 +123,10 @@ public class WebhookController {
 
     }
 
+    @Operation(
+            summary = "Secure data",
+            security = @SecurityRequirement(name = "Bearer Authentication")
+    )
     @PostMapping("/payment-finish")
     public ResponseEntity<Object> handlePaymentWebhookSuccess(@RequestBody WebhookVaResponse webhookResponse) {
         return ResponseHandler.generateResponseSuccess(true);

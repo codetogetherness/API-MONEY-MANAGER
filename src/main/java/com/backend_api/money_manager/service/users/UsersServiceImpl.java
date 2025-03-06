@@ -48,7 +48,6 @@ public class UsersServiceImpl implements UsersService{
     @Override
     @Transactional
     public ResponseEntity<Object> verificationAccount(AccountVerification request) {
-
         try{
             String user = infoAccount.get().getEmail(); //Untuk menemukan email
 

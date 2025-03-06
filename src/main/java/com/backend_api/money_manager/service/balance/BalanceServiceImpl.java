@@ -25,7 +25,6 @@ public class BalanceServiceImpl implements BalanceService {
         try{
 
             BalanceUser response = balanceUserRepository.findByUserId(infoAccount.get().getId());
-            System.out.println("ad");
             InfoBalance balance = new InfoBalance();
             balance.setFullName(response.getUser().getFullName());
             balance.setValue(response.getValue());

@@ -1,6 +1,8 @@
 package com.backend_api.money_manager.controller.users.category;
 
 import com.backend_api.money_manager.service.category.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,10 @@ public class CategoryUserController {
     @Autowired
     CategoryService categoryService;
 
+    @Operation(
+            summary = "Secure data",
+            security = @SecurityRequirement(name = "Bearer Authentication")
+    )
     @GetMapping("/categories/{name}")
     public ResponseEntity<Object> getAll(@PathVariable String name) {
         return categoryService.getAll(name);

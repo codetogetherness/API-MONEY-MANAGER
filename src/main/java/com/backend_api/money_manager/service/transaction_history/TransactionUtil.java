@@ -86,11 +86,8 @@ public class TransactionUtil {
         var categoryAction = categoryActionRepository.findById(request.getCategoryAction()).orElseThrow();
         var category = categoryRepository.findById(request.getCategoryId()).orElseThrow();
         List<Object[]> totalExpand = historyTransactionRepository.totalExpandUserByCategory(infoAccount.get().getId(), request.getCategoryAction(), request.getCategoryId());
-        System.out.println("=== data totalExp ===");
-        System.out.println(totalExpand);
+
         List<Object[]> dataBudget = budgetRepository.findAmountUserByCategory(infoAccount.get().getId(), request.getCategoryId());
-        System.out.println("=== dataBudget ===");
-        System.out.println(dataBudget);
 
         BalanceUser balance = balanceUserRepository.findByUserId(infoAccount.get().getId());
 
@@ -154,9 +151,7 @@ public class TransactionUtil {
         }
 
         if(!dataBudget.isEmpty()){
-            System.out.println("=== masuk sini ===");
             if(totalExpWithAmount > totalBudget) {
-                System.out.println("oke");
                 Users data = usersRepository.findByEmail(user).orElseThrow();
                 Context context = new Context();
                 context.setVariable("name", data.getFullName());

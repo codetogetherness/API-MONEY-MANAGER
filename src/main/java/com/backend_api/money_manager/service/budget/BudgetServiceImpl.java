@@ -48,7 +48,6 @@ public class BudgetServiceImpl implements BudgetService{
         var category = categoryRepository.findById(request.getCategoryId()).orElseThrow();
         int currentMonth = LocalDateTime.now().getMonthValue();
         String currentMonthString = String.format("%02d", currentMonth);
-        System.out.println(currentMonthString);
 
         var existingBudget = budgetRepository.findUserCreateCategoryByMonth(request.getCategoryId(), infoAccount.get().getId(), currentMonthString);
 
